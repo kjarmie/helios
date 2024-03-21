@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="QueryStream\" />
+      <Folder Include="Data\" />
     </ItemGroup>
 
 </Project>
