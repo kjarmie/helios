@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Serilog;
+using Webapp.Middleware;
 
 try
 {
@@ -25,6 +26,7 @@ try
     var app = builder.Build();
 
     // Logging
+    app.UseMiddleware<RequestLogContextMiddleware>();
     app.UseSerilogRequestLogging(options =>
     {
         options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
