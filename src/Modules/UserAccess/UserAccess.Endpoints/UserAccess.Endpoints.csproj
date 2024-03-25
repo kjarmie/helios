@@ -7,7 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Users\" />
+      <PackageReference Include="FastEndpoints" Version="5.23.0" />
+      <PackageReference Include="Riok.Mapperly" Version="3.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\UserAccess.Application\UserAccess.Application.csproj" />
+      <ProjectReference Include="..\UserAccess.Infrastructure\UserAccess.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
