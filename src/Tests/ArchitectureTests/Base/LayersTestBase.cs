@@ -19,37 +19,30 @@ public class LayersTestBase
             .Should()
             .NotHaveDependencyOn("Application")
             .GetResult();
-
-
     }
 
     [Fact]
     public void Domain_ShouldNot_HaveDependencyOnInfrastructure()
     {
-
     }
 
     [Fact]
     public void Application_ShouldNot_HaveDependencyOnInfrastructure()
     {
-
     }
 
     [Fact]
     public void Application_Should_HaveDependencyOnDomain()
     {
-
     }
 
     [Fact]
     public void Infrastructure_Should_HaveDependencyOnDomain()
     {
-
     }
 
     [Fact]
     public void Infrastructure_Should_HaveDependencyOnApplication()
     {
-
     }
 }

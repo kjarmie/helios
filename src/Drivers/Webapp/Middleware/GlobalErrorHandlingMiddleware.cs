@@ -4,7 +4,8 @@ public class GlobalErrorHandlingMiddleware : Middleware
 {
     private readonly ILogger<GlobalErrorHandlingMiddleware> _logger;
 
-    public GlobalErrorHandlingMiddleware(RequestDelegate next, ILogger<GlobalErrorHandlingMiddleware> logger) : base(next)
+    public GlobalErrorHandlingMiddleware(RequestDelegate next, ILogger<GlobalErrorHandlingMiddleware> logger) :
+        base(next)
     {
         _logger = logger;
     }
@@ -20,7 +21,6 @@ public class GlobalErrorHandlingMiddleware : Middleware
             _logger.LogError(e.Message);
 
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-
         }
     }
 }

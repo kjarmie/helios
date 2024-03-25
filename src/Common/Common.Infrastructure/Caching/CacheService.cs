@@ -14,7 +14,8 @@ public class CacheService : ICacheService
         _memoryCache = memoryCache;
     }
 
-    public async Task<T> GetOrCreateAsync<T>(string key, Func<CancellationToken, Task<T>> factory, TimeSpan? expiration = null,
+    public async Task<T> GetOrCreateAsync<T>(string key, Func<CancellationToken, Task<T>> factory,
+        TimeSpan? expiration = null,
         CancellationToken cancellationToken = default)
     {
         var result = await _memoryCache.GetOrCreateAsync(key, entry =>

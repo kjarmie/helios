@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Data\" />
+        <Folder Include="Data\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="12.2.0" />
-      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
-      <PackageReference Include="Serilog" Version="3.1.1" />
+        <PackageReference Include="MediatR" Version="12.2.0"/>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0"/>
+        <PackageReference Include="Serilog" Version="3.1.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common.Domain\Common.Domain.csproj" />
-      <ProjectReference Include="..\Common.Utilities\Common.Utilities.csproj" />
+        <ProjectReference Include="..\Common.Domain\Common.Domain.csproj"/>
+        <ProjectReference Include="..\Common.Kernel\Common.Kernel.csproj"/>
     </ItemGroup>
 
 </Project>

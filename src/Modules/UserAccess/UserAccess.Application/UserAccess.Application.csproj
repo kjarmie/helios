@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="UseCases\Commands\"/>
+        <Folder Include="UseCases\Queries\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Common\Common.Application\Common.Application.csproj"/>
+        <ProjectReference Include="..\..\..\Common\Common.Domain\Common.Domain.csproj"/>
+        <ProjectReference Include="..\..\..\Common\Common.Kernel\Common.Kernel.csproj"/>
+        <ProjectReference Include="..\UserAccess.Domain\UserAccess.Domain.csproj"/>
+    </ItemGroup>
+
+</Project>

@@ -19,11 +19,11 @@ public sealed class RequestLoggingPipelineBehaviour<TRequest, TResponse> : IPipe
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        string requestName = typeof(TRequest).Name;
+        var requestName = typeof(TRequest).Name;
 
         _logger.LogInformation("Processing request {RequestName}", requestName);
 
-        TResponse result = await next();
+        var result = await next();
 
         // TODO: Log if the outcome was success or fail. We need a way to constrain the TResult to a Result/Fin/Either, etc. We may need to create our own version of the Result struct but as a class or record.
 
