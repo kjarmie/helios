@@ -8,6 +8,18 @@ public static class LoginMapper
 {
     public static Result<LoginCommand> Map(LoginRequest request)
     {
-        LoginCommand command = new LoginCommand();
+        var command = new LoginCommand();
+
+        return Email.Create(request.Email)
+            .Bind(e =>
+            {
+                command.Email = e;
+                return Password.Create(request.Password);
+            })
+            .Map(p =>
+            {
+                command.Password = p;
+                return command;
+            });
     }
 }

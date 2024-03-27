@@ -19,6 +19,10 @@ public class Email : IValueObject<string, Email>
         Validate(value)
             .Bind<Email>(v => new Email(v));
 
+    public static bool IsValid(string value)
+    {
+        return !Validate(value).IsError;
+    }
 
     private static Result<string> Validate(string value)
     {
@@ -30,5 +34,11 @@ public class Email : IValueObject<string, Email>
             return Error.New("ValueObject.Email.InvalidEmailAddress", "Email address is not valid");
 
         return value;
+    }
+
+    public static implicit operator Email?(string email)
+    {
+        var result = Validate(email);
+        return result.Match<Email?>(ok => new Email(ok), fail => null);
     }
 }

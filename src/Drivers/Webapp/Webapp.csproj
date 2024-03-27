@@ -14,4 +14,8 @@
         <PackageReference Include="Serilog.Sinks.Seq" Version="7.0.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Modules\UserAccess\UserAccess.Endpoints\UserAccess.Endpoints.csproj" />
+    </ItemGroup>
+
 </Project>

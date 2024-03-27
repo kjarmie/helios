@@ -1,8 +1,13 @@
+using Common.Domain;
+using Common.Domain.Abstractions;
+using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Serilog;
 using Webapp.Middleware;
+using Webapp.ModelBinders;
 
 try
 {
@@ -21,6 +26,7 @@ try
 
     // Routing
     services.AddRouting(options => { options.LowercaseUrls = true; });
+    services.AddFastEndpoints();
 
     // App
     var app = builder.Build();
@@ -35,6 +41,7 @@ try
         };
         options.IncludeQueryInRequestPath = true;
     });
+
 
     app.MapGet("/", () => Results.Content(
         """

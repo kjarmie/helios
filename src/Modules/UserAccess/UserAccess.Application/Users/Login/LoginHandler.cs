@@ -6,7 +6,7 @@ using UserAccess.Domain.User.Repositories;
 
 namespace UserAccess.Application.Users.Login;
 
-public sealed class LoginHandler : ICommandHandler<LoginCommand, LoginResponse>
+public sealed class LoginHandler : ICommandHandler<LoginCommand, LoginResult>
 {
     private readonly IUserReadRepository _userReadRepository;
     private readonly IAuthenticationTokenProvider<User> _tokenProvider;
@@ -17,11 +17,11 @@ public sealed class LoginHandler : ICommandHandler<LoginCommand, LoginResponse>
         _tokenProvider = tokenProvider;
     }
 
-    public async Task<Result<LoginResponse>> Handle(LoginCommand request, CancellationToken ct)
+    public async Task<Result<LoginResult>> Handle(LoginCommand request, CancellationToken ct)
     {
         var user = (await _userReadRepository.ReadByEmailAsync(request.Email, ct))
             .Bind<string>(value => _tokenProvider.Generate(value))
-            .Bind<LoginResponse>(token => new LoginResponse(token));
+            .Bind<LoginResult>(token => new LoginResult(token));
 
         return user;
     }

@@ -15,7 +15,16 @@ public record Password : IValueObject<string, Password>
 
     public static Password Parse(string value) => new(value);
 
-    public static Result<Password> Create(string value)
+    public static Result<Password> Create(string value) =>
+        Validate(value)
+            .Bind<Password>(v => new Password(v));
+
+    public static bool IsValid(string value)
+    {
+        return !Validate(value).IsError;
+    }
+
+    private static Result<string> Validate(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             return Error.New("ValueObject.Password.EmptyOrNull", "Password should not be null empty.");
@@ -27,17 +36,21 @@ public record Password : IValueObject<string, Password>
         var hasSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
 
         if (!hasLowerChar.IsMatch(value))
-            return Error.New("ValueObject.Password.NoLowerChar", "Password should contain at least one lower case letter.");
+            return Error.New("ValueObject.Password.NoLowerChar",
+                "Password should contain at least one lower case letter.");
         if (!hasUpperChar.IsMatch(value))
-            return Error.New("ValueObject.Password.NoUpperChar", "Password should contain at least one upper case letter.");
+            return Error.New("ValueObject.Password.NoUpperChar",
+                "Password should contain at least one upper case letter.");
         if (!hasMinChars.IsMatch(value))
-            return Error.New("ValueObject.Password.MinChars", "Password should not be less than or greater than 12 characters.");
+            return Error.New("ValueObject.Password.MinChars",
+                "Password should not be less than or greater than 12 characters.");
         if (!hasNumber.IsMatch(value))
             return Error.New("ValueObject.Password.NoNumber", "Password should contain at least one numeric value.");
         if (!hasSymbols.IsMatch(value))
-            return Error.New("ValueObject.Password.NoSymbols", "Password should contain at least one special case characters.");
+            return Error.New("ValueObject.Password.NoSymbols",
+                "Password should contain at least one special case characters.");
 
-        return new Password(value);
+        return value;
     }
 
     public static implicit operator string(Password password) => password.Value;

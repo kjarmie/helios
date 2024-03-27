@@ -4,4 +4,4 @@ using Common.Domain.ValueObjects;
 
 namespace UserAccess.Application.Users.Login;
 
-public sealed record LoginCommand(Email Email, Password Password) : ICommand<LoginResponse>;
+public record struct LoginCommand(Email Email, Password Password) : ICommand<LoginResult>;

@@ -14,6 +14,6 @@ public class User : IUserEntity
 
     public User Create(Name firsName, Name lastname, Email email, Password password)
     {
-
+        throw new NotImplementedException();
     }
 }

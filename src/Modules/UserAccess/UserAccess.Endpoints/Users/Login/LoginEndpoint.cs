@@ -14,10 +14,24 @@ public class LoginEndpoint : Endpoint<LoginRequest, LoginResponse>
         _mediator = mediator;
     }
 
-    public override Task HandleAsync(LoginRequest req, CancellationToken ct)
+    public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
-        LoginCommand command = new(Email.Create(req.Email), Password.Create(req.Password));
+        var command = LoginMapper.Map(req);
 
-        var loginResult = _mediator.Send()
+        command.BindAsync<LoginResult>(
+            async (c) => await _mediator.Send(c, ct)
+        );
+
+        command.Match(
+            ok => ,
+            fail => ,
+        );
+
+        // var email = Email.Create(req.Email);
+        // var password = Password.Create(req.Password);
+
+        LoginCommand command = new(Email.Parse(req.Email), Password.Parse(req.Password));
+
+        var loginResult = await _mediator.Send(command, ct);
     }
 }

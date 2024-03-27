@@ -49,7 +49,17 @@ public record Result<T> : Result
 
     public Result<R> Bind<R>(Func<T, Result<R>> bind)
     {
-        return IsError ? Result<R>.Fail<R>(_error) : bind(_value);
+        return IsError ? _error : bind(_value);
+    }
+
+    public async Task<Result<R>> BindAsync<R>(Func<T, Task<Result<R>>> bind)
+    {
+        return IsError ? _error : await bind(_value);
+    }
+
+    public Result<R> Map<R>(Func<T, R> map)
+    {
+        return IsError ? _error : map(_value);
     }
 
     /// <summary>
@@ -58,7 +68,10 @@ public record Result<T> : Result
     /// <param name="value">The success value.</param>
     /// <typeparam name="R">The type of the new Result</typeparam>
     /// <returns>A new instance of the Result.</returns>
-    public static Result<R> Success<R>(R value) => new(value);
+    public static Result<R> Success<R>(R value)
+    {
+        return new Result<R>(value);
+    }
 
     /// <summary>
     /// Explicitly creates a new instance of a fail Result
@@ -66,7 +79,10 @@ public record Result<T> : Result
     /// <param name="value">The fail value.</param>
     /// <typeparam name="R">The type of the new Result</typeparam>
     /// <returns>A new instance of the Result.</returns>
-    public static Result<R> Fail<R>(Error error) => new(error);
+    public static Result<R> Fail<R>(Error error)
+    {
+        return new Result<R>(error);
+    }
 
     /// <summary>
     /// Allows implicit conversion from a successful value to a Result.
@@ -95,5 +111,13 @@ public record Result<T> : Result
     public R Match<R>(Func<T, R> ok, Func<Error, R> fail)
     {
         return IsError ? fail(_error) : ok(_value);
+    }
+
+    public void Match(Action<T> ok, Action<Error> fail)
+    {
+        if (IsError)
+            fail(_error);
+
+        ok(_value);
     }
 }

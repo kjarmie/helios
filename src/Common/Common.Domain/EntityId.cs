@@ -1,5 +1,8 @@
-﻿namespace Common.Domain;
+﻿using System.ComponentModel;
 
+namespace Common.Domain;
+
+[TypeConverter(typeof(EntityIdTypeConverter<EntityId>))]
 public record EntityId : IComparable<EntityId>
 {
     public Guid Value { get; }
@@ -9,10 +12,9 @@ public record EntityId : IComparable<EntityId>
         Value = value;
     }
 
-    public static EntityId New()
-    {
-        return new EntityId(Guid.NewGuid());
-    }
+    public static EntityId New() => new(Guid.NewGuid());
+
+    public static EntityId Parse(Guid guid) => new(guid);
 
     public int CompareTo(EntityId? other)
     {

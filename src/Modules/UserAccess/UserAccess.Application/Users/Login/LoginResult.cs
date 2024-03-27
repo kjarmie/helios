@@ -1,3 +1,3 @@
 ﻿namespace UserAccess.Application.Users.Login;
 
-public record LoginResponse(string token);
+public record LoginResult(string token);

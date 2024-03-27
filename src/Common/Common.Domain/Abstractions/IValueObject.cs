@@ -4,11 +4,7 @@ using Common.Utilities.FunctionalExtensions.ErrorHandling;
 
 namespace Common.Domain.Abstractions;
 
-public interface IValueObject
-{
-}
-
-public interface IValueObject<TValue, TThis> : IValueObject
+public interface IValueObject<TValue, TThis>
     where TThis : IValueObject<TValue, TThis>
 {
     // public static Result<T> Create(object p) => Error.New($"ValueObject.{typeof(T).Name}",
@@ -27,4 +23,15 @@ public interface IValueObject<TValue, TThis> : IValueObject
     /// <param name="value">The primitive value to parse.</param>
     /// <returns>A new instance of TTHis wrapped in a Result to indicate if parsing was successful.</returns>
     public static abstract Result<TThis> Create(TValue value);
+
+    /// <summary>
+    /// Performs validation logic on the value object. Provides an alternative creation pattern to the Create method
+    /// by performing validation on the primitive, then calling Parse to create a new instance. It is recommended
+    /// that the Create method uses the same logic as this method.
+    /// </summary>
+    /// <param name="value">The primitive value to parse.</param>
+    /// <returns>A bool indicating if the primitive is a valid ValueObject of type TTHis.</returns>
+    public static abstract bool IsValid(TValue value);
+
+
 }
